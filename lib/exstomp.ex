@@ -59,6 +59,12 @@ defmodule Exstomp do
     {:stop, "error frame", state}
   end
 
+  def handle_info({:tcp, _socket, unhandled_msg}, state) do
+    IO.puts "unhandled message from broker"
+    IO.puts unhandled_msg
+    {:noreply, state}
+  end
+
   def handle_info(:heartbeat, state) do
     IO.puts "sending heartbea to #{inspect state.socket}"
     case :gen_tcp.send(state.socket, "\n") do
