@@ -2,8 +2,9 @@ defmodule Exstomp do
   @moduledoc """
   Documentation for Exstomp.
   """
-
   use GenServer
+
+  alias Exstomp.Frame
 
   def start_link(config \\ %{}) do
     GenServer.start_link(__MODULE__, config)
@@ -19,7 +20,7 @@ defmodule Exstomp do
     IO.puts "Initializing connection"
     case :gen_tcp.connect('localhost', 61613, [:binary]) do
       {:ok, socket} ->
-        case :gen_tcp.send(socket, build_connect_frame()) do
+        case :gen_tcp.send(socket, Frame.build_connect_frame()) do
           :ok ->
             Process.send_after(self(), :heartbeat, 10_000)
             {:ok, %{socket: socket}}
@@ -35,7 +36,7 @@ defmodule Exstomp do
 
   def handle_call({:send, %{message: message, dest: dest}}, _from, status) do
     IO.puts "sending message #{message}"
-    case :gen_tcp.send(status.socket, build_send_frame(dest, message)) do
+    case :gen_tcp.send(status.socket, Frame.build_send_frame(dest, message)) do
       :ok ->
         {:reply, :ok, status}
       {:err, _reason} ->
@@ -74,29 +75,6 @@ defmodule Exstomp do
       {:err, _reason} ->
         IO.puts "error sending heartbeat"
     end
-  end
-
-  defp build_connect_frame(_options \\ []) do
-    """
-    CONNECT
-    accept-version:1.0,1.1
-    login:
-    passcode:
-    heart-beat:10000,7500
-    host:/
-
-    """ <> "\0"
-  end
-
-  defp build_send_frame(dest, message) do
-    msg = """
-    SEND
-    destination:#{dest}
-    content-type:text/plain
-    content-length:#{String.length(message) + 1}
-
-    #{message}
-    """ <> "\0"
   end
 
 end
