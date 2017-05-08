@@ -5,7 +5,7 @@ defmodule Exstomp.Mixfile do
     [
       app: :exstomp,
       version: "0.1.0",
-      elixir: "~> 1.5-dev",
+      elixir: "~> 1.4",
       start_permanent: Mix.env == :prod,
       deps: deps()
     ]

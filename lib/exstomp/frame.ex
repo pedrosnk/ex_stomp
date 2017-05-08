@@ -1,5 +1,11 @@
 defmodule Exstomp.Frame do
 
+  def build_frame(message, headers) do
+    "#{message}\n" <>
+      (Enum.map(headers, fn(h) -> "#{elem(h, 0)}:#{elem(h, 1)}" end) |> Enum.join("\n")) <>
+      "\n\n\0"
+  end
+
   def build_connect_frame(_options \\ []) do
     """
     CONNECT

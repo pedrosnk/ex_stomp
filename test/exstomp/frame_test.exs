@@ -15,4 +15,12 @@ defmodule Exstomp.FrameTest do
       assert Frame.build_send_frame("/queue/foo", "foobar") == expected
     end
   end
+
+  describe "build frame" do
+    test "build connect frame" do
+      headers = %{"accept-version": "1.1", host: "customstomphost.org"}
+      expected = "CONNECT\naccept-version:1.1\nhost:customstomphost.org\n\n\0"
+      assert Frame.build_frame("CONNECT", headers) == expected
+    end
+  end
 end
