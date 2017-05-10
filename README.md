@@ -1,11 +1,10 @@
 # Exstomp
 
-**TODO: Add description**
+Exstom is a library that implents the stomp 1.1 protocol to work with Activemq
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `exstomp` to your list of dependencies in `mix.exs`:
+Add into your mix.exs file as dependecy
 
 ```elixir
 def deps do
@@ -13,7 +12,8 @@ def deps do
 end
 ```
 
+
+
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/exstomp](https://hexdocs.pm/exstomp).
-

@@ -1,4 +1,8 @@
 defmodule Exstomp.Frame do
+  @docmodule """
+  Doc for the frame module. This module is used to create the frame
+  that will be passed as a message to the broker.
+  """
 
   def build_frame(message, headers) do
     "#{message}\n" <>
