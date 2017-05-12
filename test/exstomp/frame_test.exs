@@ -3,8 +3,8 @@ defmodule Exstomp.FrameTest do
   alias Exstomp.Frame
 
   test "build a connect frame" do
-    expected = "CONNECT\naccept-version:1.0,1.1\nlogin:\npasscode:\n" <>
-      "heart-beat:10000,7500\nhost:/\n\n\0"
+    expected = "CONNECT\naccept-version:1.0,1.1\nheart-beat:10000,7500\nhost:/\n" <>
+      "login:\npasscode:\n\n\0"
     assert Frame.build_connect_frame == expected
   end
 
