@@ -1,8 +1,10 @@
 defmodule Exstomp.Frame do
-  @docmodule """
+  @moduledoc """
   Doc for the frame module. This module is used to create the frame
   that will be passed as a message to the broker.
   """
+
+  defstruct [:type, :headers, :message]
 
   def build_frame(message, headers) do
     "#{message}\n" <>
@@ -30,6 +32,10 @@ defmodule Exstomp.Frame do
 
     #{message}
     """ <> "\0"
+  end
+
+  def parse("\n") do
+    %Exstomp.Frame{type: :heartbeat}
   end
 
 end

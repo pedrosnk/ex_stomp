@@ -23,4 +23,10 @@ defmodule Exstomp.FrameTest do
       assert Frame.build_frame("CONNECT", headers) == expected
     end
   end
+
+  describe "parse a message into frame" do
+    test "parse a heartbeat frame" do
+      assert %Frame{type: :heartbeat} == Frame.parse("\n")
+    end
+  end
 end
